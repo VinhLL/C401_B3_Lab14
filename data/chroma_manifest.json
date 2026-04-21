@@ -1,0 +1,14 @@
+{
+  "collection_name": "blds2015_legal_corpus",
+  "persist_directory": "D:\\Work\\C401_B3_Lab14\\data\\chroma_db",
+  "corpus_path": "D:\\Work\\C401_B3_Lab14\\data\\domain_corpus.jsonl",
+  "document_count": 177,
+  "embedding_backend": "deterministic_hash_v1",
+  "embedding_dimension": 256,
+  "probe_query": "Theo Dieu 297 BLDS 2015, hieu luc doi khang voi nguoi thu ba phat sinh khi nao?",
+  "probe_top_chunk_ids": [
+    "blds2015_bao_dam_nghia_vu_chunk_009",
+    "blds2015_bao_dam_nghia_vu_chunk_011",
+    "blds2015_bao_dam_nghia_vu_chunk_008"
+  ]
+}
