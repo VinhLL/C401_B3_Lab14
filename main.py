@@ -4,17 +4,31 @@ import os
 import time
 from engine.runner import BenchmarkRunner
 from engine.llm_judge import LLMJudge
+from engine.retrieval_eval import RetrievalEvaluator
 from agent.main_agent import MainAgent
 
-# Giả lập các components Expert
 class ExpertEvaluator:
-    async def score(self, case, resp): 
-        # Giả lập tính toán Hit Rate và MRR
+    def __init__(self):
+        self.retrieval_evaluator = RetrievalEvaluator()
+
+    async def score(self, case, resp):
+        retrieval = self.retrieval_evaluator.evaluate_case(
+            expected_ids=case.get("expected_retrieval_ids"),
+            retrieved_ids=resp.get("retrieved_ids"),
+            top_k=case.get("top_k"),
+            case=case,
+        )
+
         return {
-            "faithfulness": 0.9, 
+            "faithfulness": 0.9,
             "relevancy": 0.8,
-            "retrieval": {"hit_rate": 1.0, "mrr": 0.5}
+            "retrieval": retrieval,
         }
+
+
+def build_agent(agent_version: str) -> MainAgent:
+    version = "v2" if "V2" in agent_version.upper() else "v1"
+    return MainAgent(version=version)
 
 async def run_benchmark_with_results(agent_version: str):
     print(f"🚀 Khởi động Benchmark cho {agent_version}...")
@@ -30,18 +44,25 @@ async def run_benchmark_with_results(agent_version: str):
         print("❌ File data/golden_set.jsonl rỗng. Hãy tạo ít nhất 1 test case.")
         return None, None
 
-    runner = BenchmarkRunner(MainAgent(), ExpertEvaluator(), LLMJudge())
+    runner = BenchmarkRunner(build_agent(agent_version), ExpertEvaluator(), LLMJudge())
     results = await runner.run_all(dataset)
 
     total = len(results)
+    scored_retrieval_cases = [r for r in results if r["ragas"]["retrieval"].get("is_scored")]
+    retrieval_denominator = len(scored_retrieval_cases)
+
     summary = {
         "metadata": {"version": agent_version, "total": total, "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")},
         "metrics": {
             "avg_score": sum(r["judge"]["final_score"] for r in results) / total,
-            "hit_rate": sum(r["ragas"]["retrieval"]["hit_rate"] for r in results) / total,
-            "agreement_rate": sum(r["judge"]["agreement_rate"] for r in results) / total
+            "hit_rate": sum(r["ragas"]["retrieval"]["hit_rate"] for r in scored_retrieval_cases) / retrieval_denominator if retrieval_denominator else 0.0,
+            "avg_hit_rate": sum(r["ragas"]["retrieval"]["hit_rate"] for r in scored_retrieval_cases) / retrieval_denominator if retrieval_denominator else 0.0,
+            "avg_mrr": sum(r["ragas"]["retrieval"]["mrr"] for r in scored_retrieval_cases) / retrieval_denominator if retrieval_denominator else 0.0,
+            "agreement_rate": sum(r["judge"]["agreement_rate"] for r in results) / total,
         }
     }
+    summary["metadata"]["scored_retrieval_cases"] = retrieval_denominator
+    summary["metadata"]["skipped_retrieval_cases"] = total - retrieval_denominator
     return results, summary
 
 async def run_benchmark(version):

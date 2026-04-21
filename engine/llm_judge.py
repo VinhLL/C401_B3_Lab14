@@ -7,7 +7,12 @@ from openai import AsyncOpenAI
 class LLMJudge:
     def __init__(self, model: str = "gpt-4o"):
         self.model = model
-        self.client = AsyncOpenAI()
+        self.client = None
+        self.client_init_error = None
+        try:
+            self.client = AsyncOpenAI()
+        except Exception as exc:
+            self.client_init_error = str(exc)
         
         # === RUBRICS CHI TIẾT CHO CÁC TIÊU CHÍ ĐÁNH GIÁ ===
         self.rubrics = {
@@ -249,6 +254,16 @@ Trả lời CHÍNH XÁC theo format JSON:
         - Xử lý conflict khi có sự khác nhau
         - Trả về final_score, agreement_rate, individual_scores, reasoning/conflict_note
         """
+        if self.client is None:
+            init_error = self.client_init_error or "AsyncOpenAI client is not available"
+            return {
+                "final_score": 2.5,
+                "agreement_rate": 0.0,
+                "individual_scores": {"accuracy": 2, "groundedness": 2, "tone": 3},
+                "reasoning": f"LLM judge unavailable. Fallback scoring enabled. Reason: {init_error}",
+                "conflict_note": f"LLM judge fallback because client initialization failed: {init_error}",
+            }
+
         try:
             # === PHASE 1: Gọi 3 judges song song ===
             accuracy_task = self._judge_accuracy(question, answer, ground_truth)
@@ -330,6 +345,13 @@ CONSENSUS:
         
         Trả về chi tiết độ thiên vị.
         """
+        if self.client is None:
+            init_error = self.client_init_error or "AsyncOpenAI client is not available"
+            return {
+                "position_bias_detected": False,
+                "error": f"Position bias check skipped: {init_error}",
+            }
+
         bias_check_prompt = f"""Bạn là một tr裁判 unbiased. So sánh 2 câu trả lời và chọn cái tốt hơn.
 
 CÂUHỎI: {question}
