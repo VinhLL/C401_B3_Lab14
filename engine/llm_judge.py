@@ -266,13 +266,19 @@ Trả lời CHÍNH XÁC theo format JSON:
 
         try:
             # === PHASE 1: Gọi 3 judges song song ===
-            accuracy_task = self._judge_accuracy(question, answer, ground_truth)
-            groundedness_task = self._judge_groundedness(question, answer, ground_truth)
-            tone_task = self._judge_tone_safety(question, answer, ground_truth)
-            
-            accuracy_score, accuracy_reasoning = await accuracy_task
-            groundedness_score, groundedness_reasoning = await groundedness_task
-            tone_score, tone_reasoning = await tone_task
+            accuracy_task = asyncio.create_task(self._judge_accuracy(question, answer, ground_truth))
+            groundedness_task = asyncio.create_task(self._judge_groundedness(question, answer, ground_truth))
+            tone_task = asyncio.create_task(self._judge_tone_safety(question, answer, ground_truth))
+
+            (
+                (accuracy_score, accuracy_reasoning),
+                (groundedness_score, groundedness_reasoning),
+                (tone_score, tone_reasoning),
+            ) = await asyncio.gather(
+                accuracy_task,
+                groundedness_task,
+                tone_task,
+            )
             
             # === PHASE 2: Tập hợp individual scores ===
             individual_scores = {

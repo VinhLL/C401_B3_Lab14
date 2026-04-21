@@ -1,6 +1,6 @@
 {
   "schema_version": "lab14.summary.v2",
-  "generated_at": "2026-04-21T16:13:11+07:00",
+  "generated_at": "2026-04-21T17:17:11+07:00",
   "metadata": {
     "version": "Agent_V2_Optimized",
     "baseline_version": "Agent_V1_Base",
@@ -32,25 +32,21 @@
     },
     "chromadb_compat": {
       "checked": true,
-      "applied": true,
-      "aliases": [
-        "opentelemetry.sdk._logs.ReadableLogRecord -> LogData",
-        "opentelemetry.sdk._logs.export.LogRecordExportResult -> LogExportResult"
-      ],
+      "applied": false,
+      "aliases": [],
       "error": null
     },
     "notes": [
-      "Applied local ChromaDB/OpenTelemetry compatibility aliases from main.py to avoid import failure.",
       "Judge backend produced runtime issues during the candidate run; inspect judge_issue_counts for details."
     ]
   },
   "metrics": {
-    "avg_score": 2.5,
+    "avg_score": 2.475,
     "hit_rate": 0.1167,
     "avg_hit_rate": 0.1167,
     "avg_mrr": 0.0733,
-    "agreement_rate": 0.0,
-    "avg_latency_ms": 378.66,
+    "agreement_rate": 0.0088,
+    "avg_latency_ms": 3140.39,
     "avg_tokens_used": 919.57,
     "avg_estimated_cost": 0.091957,
     "pass_rate": 0.0,
@@ -65,46 +61,46 @@
       "scored_retrieval_cases": 60,
       "skipped_retrieval_cases": 0,
       "status_counts": {
-        "pass": 0,
-        "fail": 60,
+        "pass": 2,
+        "fail": 58,
         "error": 0
       },
       "metrics": {
-        "avg_score": 2.5,
+        "avg_score": 2.175,
         "hit_rate": 0.0833,
         "avg_hit_rate": 0.0833,
         "avg_mrr": 0.0667,
-        "agreement_rate": 0.0,
-        "avg_latency_ms": 406.27,
+        "agreement_rate": 0.1783,
+        "avg_latency_ms": 3501.79,
         "avg_tokens_used": 587.3,
         "avg_estimated_cost": 0.05873,
-        "pass_rate": 0.0,
+        "pass_rate": 0.0333,
         "error_rate": 0.0
       },
-      "wall_clock_seconds": 6.55,
+      "wall_clock_seconds": 55.03,
       "judge_issue_counts": {
-        "invalid_api_key": 60
+        "judge_runtime_error": 39
       },
       "breakdown": {
         "difficulty": {
           "easy": {
             "count": 20,
-            "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "pass_rate": 0.05,
+            "avg_score": 2.2415,
             "hit_rate": 0.05,
             "avg_mrr": 0.025
           },
           "hard": {
             "count": 15,
             "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "avg_score": 2.3333,
             "hit_rate": 0.0667,
             "avg_mrr": 0.0333
           },
           "medium": {
             "count": 25,
-            "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "pass_rate": 0.04,
+            "avg_score": 2.0268,
             "hit_rate": 0.12,
             "avg_mrr": 0.12
           }
@@ -112,15 +108,15 @@
         "type": {
           "article_rule": {
             "count": 11,
-            "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "pass_rate": 0.0909,
+            "avg_score": 2.53,
             "hit_rate": 0.0909,
             "avg_mrr": 0.0455
           },
           "comparison": {
             "count": 16,
-            "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "pass_rate": 0.0625,
+            "avg_score": 2.0312,
             "hit_rate": 0.125,
             "avg_mrr": 0.125
           },
@@ -134,14 +130,14 @@
           "rule_interpretation": {
             "count": 12,
             "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "avg_score": 1.6808,
             "hit_rate": 0.0833,
             "avg_mrr": 0.0833
           },
           "scenario_analysis": {
             "count": 15,
             "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "avg_score": 2.3333,
             "hit_rate": 0.0667,
             "avg_mrr": 0.0333
           },
@@ -168,20 +164,20 @@
         "error": 0
       },
       "metrics": {
-        "avg_score": 2.5,
+        "avg_score": 2.475,
         "hit_rate": 0.1167,
         "avg_hit_rate": 0.1167,
         "avg_mrr": 0.0733,
-        "agreement_rate": 0.0,
-        "avg_latency_ms": 378.66,
+        "agreement_rate": 0.0088,
+        "avg_latency_ms": 3140.39,
         "avg_tokens_used": 919.57,
         "avg_estimated_cost": 0.091957,
         "pass_rate": 0.0,
         "error_rate": 0.0
       },
-      "wall_clock_seconds": 5.79,
+      "wall_clock_seconds": 41.35,
       "judge_issue_counts": {
-        "invalid_api_key": 60
+        "judge_runtime_error": 59
       },
       "breakdown": {
         "difficulty": {
@@ -202,7 +198,7 @@
           "medium": {
             "count": 25,
             "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "avg_score": 2.44,
             "hit_rate": 0.12,
             "avg_mrr": 0.12
           }
@@ -225,7 +221,7 @@
           "procedure": {
             "count": 4,
             "pass_rate": 0.0,
-            "avg_score": 2.5,
+            "avg_score": 2.125,
             "hit_rate": 0.0,
             "avg_mrr": 0.0
           },
@@ -258,16 +254,16 @@
     "baseline_version": "Agent_V1_Base",
     "candidate_version": "Agent_V2_Optimized",
     "delta": {
-      "avg_score": 0.0,
+      "avg_score": 0.3,
       "hit_rate": 0.0334,
       "avg_mrr": 0.0066,
-      "agreement_rate": 0.0,
-      "avg_latency_ms": -27.61,
+      "agreement_rate": -0.1695,
+      "avg_latency_ms": -361.4,
       "avg_estimated_cost": 0.033227
     },
-    "score_improved_cases": 0,
-    "score_regressed_cases": 0,
-    "score_unchanged_cases": 60,
+    "score_improved_cases": 18,
+    "score_regressed_cases": 4,
+    "score_unchanged_cases": 38,
     "retrieval_improved_cases": 2,
     "retrieval_regressed_cases": 0,
     "retrieval_unchanged_cases": 58
@@ -281,8 +277,8 @@
         "metric": "avg_score",
         "operator": ">=",
         "threshold": 3.0,
-        "baseline": 2.5,
-        "candidate": 2.5,
+        "baseline": 2.175,
+        "candidate": 2.475,
         "passed": false
       },
       {
@@ -299,8 +295,8 @@
         "metric": "agreement_rate",
         "operator": ">=",
         "threshold": 0.5,
-        "baseline": 0.0,
-        "candidate": 0.0,
+        "baseline": 0.1783,
+        "candidate": 0.0088,
         "passed": false
       },
       {
@@ -308,9 +304,9 @@
         "metric": "avg_latency_ms",
         "operator": "<=",
         "threshold": 2500.0,
-        "baseline": 406.27,
-        "candidate": 378.66,
-        "passed": true
+        "baseline": 3501.79,
+        "candidate": 3140.39,
+        "passed": false
       },
       {
         "name": "candidate_cost_ceiling",
@@ -327,7 +323,7 @@
         "operator": ">=",
         "threshold": 0.0,
         "baseline": 0.0,
-        "candidate": 0.0,
+        "candidate": 0.3,
         "passed": true
       },
       {
@@ -345,7 +341,7 @@
         "operator": "<=",
         "threshold": 400.0,
         "baseline": 0.0,
-        "candidate": -27.61,
+        "candidate": -361.4,
         "passed": true
       },
       {
@@ -362,6 +358,7 @@
       "candidate_avg_score_floor",
       "candidate_hit_rate_floor",
       "candidate_agreement_rate_floor",
+      "candidate_latency_ceiling",
       "cost_ratio_guard"
     ],
     "thresholds": {
